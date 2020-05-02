@@ -1,0 +1,13 @@
+set dmflags 280084
+set hostname "picluster"
+set website "https://www.soupbowl.io" s
+set Admin "hello@example.com" s
+set deathmatch 1
+set maxclients 6
+set fraglimit 150
+set capturelimit 8
+set timelimit 30
+set stdlogfile 1
+set rcon_password "passwd"
+set allow_download 0
+map q2dm1

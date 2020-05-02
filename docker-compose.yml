@@ -2,3 +2,7 @@ version: '3.6'
 services:
   quake2:
     build: .
+    ports:
+     - "27910:27910/udp"
+    volumes:
+     - ./server.cfg:/usr/share/games/quake2/baseq2/server.cfg
