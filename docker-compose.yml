@@ -1,6 +1,7 @@
 version: '3.6'
 services:
   quake2:
+    image: soupbowl/quake2rpi
     build: .
     ports:
      - "27910:27910/udp"
