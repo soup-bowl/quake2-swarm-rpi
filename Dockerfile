@@ -1,35 +1,30 @@
 FROM debian:buster
 
-# Derived from https://github.com/InAnimaTe/docker-quake2.
+workdir /opt/quake2
 
-## The Data from the official point release.
-RUN echo "deb http://httpredir.debian.org/debian buster contrib" >> /etc/apt/sources.list && \
-	apt-get update && \
-	apt-get install -y unzip quake2-server \
-	wget && \
-	apt-get clean
+add ./quake2.zip /opt/quake2.zip
 
-RUN rm -rf \
-        /var/lib/apt/lists/* \
-        /tmp/* \
-        /var/tmp/* \
-        /usr/share/locale/* \
-        /var/cache/debconf/*-old \
-        /var/lib/apt/lists/* \
-        /usr/share/doc/*
+run useradd -m -s /bin/bash quake2 \
+    && chown -R quake2:quake2 /opt/quake2
 
-WORKDIR /usr/share/games/quake2
+# Build files for Quake II Pro.
+run apt-get update && apt-get install -y build-essential libsdl2-dev libopenal-dev \
+    libpng-dev libjpeg-dev zlib1g-dev mesa-common-dev \
+    libcurl4-gnutls-dev wget unzip
 
-ADD quake2.zip /usr/share/games/quake2/quake2.zip
+# Unzip our copy of Quake II into the system.
+run chmod +x /opt/quake2.zip \
+    && unzip /opt/quake2.zip -d /opt/quake2
 
-RUN chmod +x quake2.zip && \
-    unzip quake2.zip && \
-    rm -rf quake2.zip
+# Compile Quake II Pro server for our architecture.
+run mkdir /opt/build && wget https://skuller.net/q2pro/nightly/q2pro-source.tar.gz -O- | tar zxvf - -C /opt/build
+run mv /opt/build/q2pro-r*/* /opt/build/
+run (cd /opt/build && make && make strip)
+run mv /opt/build/q2proded /opt/quake2/
 
-USER quake2-server
+expose 27910
 
-EXPOSE 27910/udp
+user quake2
 
-ENTRYPOINT ["/usr/games/quake2-server"]
-
-CMD ["+map", "q2dm1", "+exec", "server.cfg"]
+#cmd sleep infinity
+cmd ./q2proded +exec server.cfg +set dedicated 1 +set deathmatch 1

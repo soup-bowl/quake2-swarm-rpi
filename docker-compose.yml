@@ -6,4 +6,4 @@ services:
     ports:
      - "27910:27910/udp"
     volumes:
-     - ./server.cfg:/usr/share/games/quake2/baseq2/server.cfg
+     - ./server.cfg:/opt/quake2/baseq2/server.cfg

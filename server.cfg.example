@@ -1,13 +1,21 @@
-set dmflags 280084
 set hostname "picluster"
-set website "https://www.soupbowl.io" s
-set Admin "hello@example.com" s
 set deathmatch 1
 set maxclients 6
-set fraglimit 150
-set capturelimit 8
-set timelimit 30
-set stdlogfile 1
-set rcon_password "passwd"
-set allow_download 0
+set fraglimit 20
+set timelimit 20
+set logfile 2
+set sys_console 2
+set rcon_password !!!secret!!!
+set sv_password !!!secret!!!
+set allow_download 1
+set allow_download_players 1
+set allow_download_models 1
+set allow_download_sounds 1
+set allow_download_maps 1
+sv_iplimit 0
+
+// Pro Clients
+set sv_show_name_changes 1
+
+set sv_maplist "q2dm1 q2dm2 q2dm3 q2dm4 q2dm5 q2dm6 q2dm7 q2dm8"
 map q2dm1
